@@ -7,7 +7,15 @@ const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildVoiceStates
+    ]
+});
 
 client.commands = new Collection(); // create a collection for the discord commands
 
@@ -20,9 +28,9 @@ for (const file of commandFiles) {
     const command = require(filePath);
 
     //console.log(command);
-    if('data' in command && 'execute' in command){
+    if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
-    }else{
+    } else {
         console.log(`[WARNING] SlashCommand not properly defined (${filePath})`);
     }
 
@@ -35,20 +43,20 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on(Events.InteractionCreate, async interaction => {
-    if(!interaction.isChatInputCommand()) return;
+    if (!interaction.isChatInputCommand()) return;
     console.log(interaction);
 
     const command = interaction.client.commands.get(interaction.commandName);
 
-    if(!command){
+    if (!command) {
         console.error(`No command with name ${interaction.commandName} found!`);
         return;
     }
 
-    try{
+    try {
         command.execute(interaction);
 
-    }catch(error){
+    } catch (error) {
         console.error(error);
         await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
