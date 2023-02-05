@@ -16,7 +16,7 @@ module.exports = {
                 .setDescription("URL or Query Name for the Video on YouTube!")
                 .setRequired(true)),
     async execute(interaction) {
-        if (!interaction.member.voice?.channel) return interaction.channel.send('Connect to a Voice Channel')
+        if (!interaction.member.voice?.channel) return interaction.reply({content: 'Connect to a Voice Channel', ephemeral: true})
 
 
         const target = interaction.options.getString('name');
