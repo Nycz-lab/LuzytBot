@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 // Require the necessary discord.js classes
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const { token } = require('./config.json');
 
 // Create a new client instance
@@ -40,6 +40,7 @@ for (const file of commandFiles) {
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, c => {
     console.log(`Ready! Logged in as ${c.user.tag}`);
+    c.user.setActivity('Edgerunners', { type: ActivityType.Watching });
 });
 
 client.on(Events.InteractionCreate, async interaction => {
