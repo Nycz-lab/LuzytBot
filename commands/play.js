@@ -55,7 +55,6 @@ module.exports = {
             }
         });
 
-        audio_player.
 
         //play.attachListeners(audio_player, stream);
 
