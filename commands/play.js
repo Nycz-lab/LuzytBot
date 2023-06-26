@@ -103,13 +103,13 @@ module.exports = {
                     .setStyle(ButtonStyle.Primary),
             ).addComponents(
                 new ButtonBuilder()
-                    .setCustomId('play')
-                    .setLabel('▶')
+                    .setCustomId('stop')
+                    .setLabel('⏹')
                     .setStyle(ButtonStyle.Primary),
             ).addComponents(
                 new ButtonBuilder()
-                    .setCustomId('stop')
-                    .setLabel('⏹')
+                    .setCustomId('play')
+                    .setLabel('▶')
                     .setStyle(ButtonStyle.Primary),
             );
 
@@ -123,10 +123,10 @@ module.exports = {
                 await i.update({ content: 'The session has ended!', embeds: [], components: [] });
             }else if(i.customId === 'pause'){
                 audio_player.pause();
-                await i.update({});
+                await i.update({ content: 'Playback is paused!', embeds: [infoEmbed], components: [row] });
             }else if(i.customId === 'play'){
                 audio_player.unpause();
-                await i.update({});
+                await i.update({ content: 'Playback has resumed!', embeds: [infoEmbed], components: [row] });
             }
             
         });
